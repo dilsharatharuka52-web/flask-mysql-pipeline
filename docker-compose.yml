@@ -1,0 +1,22 @@
+version: "3.8"
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: mysql-db
+    environment:
+      MYSQL_DATABASE: "devops"
+      MYSQL_ROOT_PASSWORD: "root"
+    networks:
+      - two-tier
+  flask:
+    build: .
+    container_name: flask-app
+    ports:
+      - "5000:5000"
+    depends_on:
+      - mysql
+    networks:
+      - two-tier
+networks:
+  two-tier:
+    driver: bridge
